@@ -33,11 +33,20 @@ yms.components.todo = Vue.component("yms-todo", {
             var task = yms.helpers.createTask(this.title);
             this.tasks.push(task);
             this.title = "";
+        },
+        sendToInProgress: function (index, task) {
+            this.$parent.saveToInProgress(task)
+            this.tasks.splice(index, 1);
         }
     }
 });
 yms.components.inProgress = Vue.component("yms-inprogress", {
-    template: '#tmpInprogress'
+    template: '#tmpInprogress',
+    data: function () {
+        return {
+            tasks : []
+        };
+    }
 });
 
 yms.components.done = Vue.component("yms-done", {
@@ -45,5 +54,10 @@ yms.components.done = Vue.component("yms-done", {
 });
 
 new Vue({
-    el: "#taskList"
+    el: "#taskList",
+    methods: {
+        saveToInProgress: function (task) {
+            console.log("Aldım");
+        }
+    }
 });
