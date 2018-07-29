@@ -29,10 +29,10 @@
             <a class="list-group-item clearfix" v-for="(t, i) in tasks">
                 {{t.title}}
                 <span class="pull-right">
-                    <span class="btn btn-xs btn-success">
-                        <span class="glyphicon glyphicon-chevron-right" v-on:click="sendToInProgress(i, t)" aria-hidden="true"></span>
+                    <span class="btn btn-xs btn-success" v-on:click="sendToInProgress(i, t)">
+                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                     </span>
-                    <span class="btn btn-xs btn-danger">
+                    <span class="btn btn-xs btn-danger" v-on:click="remove(i)">
                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                     </span>
                 </span>
@@ -48,11 +48,11 @@
             <a class="list-group-item clearfix" v-for="(t, i) in tasks">
                 {{t.title}}
                 <span class="pull-right">
-                    <span class="btn btn-xs btn-success">
-                        <span class="glyphicon glyphicon-chevron-right" v-on:click="sendToInProgress(i, t)" aria-hidden="true"></span>
+                    <span class="btn btn-xs btn-success" v-on:click="sendToToDo(i, t)">
+                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
                     </span>
-                    <span class="btn btn-xs btn-danger">
-                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                    <span class="btn btn-xs btn-success" v-on:click="sendToDone(i, t)">
+                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                     </span>
                 </span>
             </a>
