@@ -12,12 +12,13 @@
     <div class="col-md-4">
         <yms-done></yms-done>
     </div>
+    <div class="col-md-12">
+        <yms-archive></yms-archive>
+    </div>
 </div>
 
 <script id="tmpTodo" type="text/html">
     <div>
-        <h4>Yapılacak İşler</h4>
-        <hr />
         <div class="input-group">
             <input type="text" class="form-control" v-model="title" placeholder="İşinize bir isim verin">
             <span class="input-group-btn">
@@ -25,45 +26,82 @@
             </span>
         </div>
         <hr />
-        <div class="list-group">
-            <a class="list-group-item clearfix" v-for="(t, i) in tasks">
-                {{t.title}}
-                <span class="pull-right">
-                    <span class="btn btn-xs btn-success" v-on:click="sendToInProgress(i, t)">
-                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                    </span>
-                    <span class="btn btn-xs btn-danger" v-on:click="remove(i)">
-                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                    </span>
-                </span>
-            </a>
+        <div class="panel panel-primary">
+            <div class="panel-heading">Yapılacak İşler</div>
+            <div class="panel-body">
+                <div class="list-group">
+                    <a class="list-group-item clearfix" v-for="(t, i) in tasks">
+                        {{t.title}}
+                        <span class="pull-right">
+                            <span class="btn btn-xs btn-success" v-on:click="sendToInProgress(i, t)">
+                                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                            </span>
+                            <span class="btn btn-xs btn-danger" v-on:click="remove(i)">
+                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                            </span>
+                        </span>
+                    </a>
+                </div>
+            </div>
         </div>
+        
     </div>
 </script>
 <script id="tmpInprogress" type="text/html">
     <div>
-        <h4>Üzerimdeki İşler</h4>
-        <hr />
-        <div class="list-group">
-            <a class="list-group-item clearfix" v-for="(t, i) in tasks">
-                {{t.title}}
-                <span class="pull-right">
-                    <span class="btn btn-xs btn-success" v-on:click="sendToToDo(i, t)">
-                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                    </span>
-                    <span class="btn btn-xs btn-success" v-on:click="sendToDone(i, t)">
-                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                    </span>
-                </span>
-            </a>
+        <div class="panel panel-warning" style="margin-top:74px">
+            <div class="panel-heading">Üzerimdeki İşler</div>
+            <div class="panel-body">
+                <div class="list-group">
+                    <a class="list-group-item clearfix" v-for="(t, i) in tasks">
+                        {{t.title}}
+                        <span class="pull-right">
+                            <span class="btn btn-xs btn-success" v-on:click="sendToToDo(i, t)">
+                                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                            </span>
+                            <span class="btn btn-xs btn-success" v-on:click="sendToDone(i, t)">
+                                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                            </span>
+                        </span>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </script>
 <script id="tmpDone" type="text/html">
     <div>
-        <h4>Biten İşler</h4>
-        <ul class="list-group">
-            <li class="list-group-item">Cras justo odio</li>
-        </ul>
+        <div class="panel panel-danger"  style="margin-top:74px">
+            <div class="panel-heading">Biten İşler</div>
+            <div class="panel-body">
+                <div class="list-group">
+                    <a class="list-group-item clearfix" v-for="(t, i) in tasks">
+                        {{t.title}}
+                        <span class="pull-right">
+                            <span class="btn btn-xs btn-primary" v-on:click="finish(i, t)">
+                                <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                            </span>
+                            <span class="btn btn-xs btn-success" v-on:click="sendToInProgress(i, t)">
+                                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                            </span>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<script id="tmpArchive" type="text/html">
+    <div>
+        <button class="btn btn-primary" v-on:click="toggleArchive">{{buttonText}}</button>
+        <div v-if="isVisible">
+            <h4>Biten İşler</h4>
+            <hr />
+            <div class="list-group">
+                <a class="list-group-item clearfix" v-for="(t, i) in tasks">
+                    {{t.title}}
+                </a>
+            </div>
+        </div>
     </div>
 </script>

@@ -65,7 +65,8 @@ yms.components.inProgress = Vue.component("yms-inprogress", {
             this.tasks.splice(index, 1);
         },
         sendToDone: function (index, task) {
-
+            this.$parent.saveToDone(task);
+            this.tasks.splice(index, 1);
         }
     },
     mounted: function () {
@@ -75,11 +76,57 @@ yms.components.inProgress = Vue.component("yms-inprogress", {
         });
     }
 });
-
 yms.components.done = Vue.component("yms-done", {
-    template: '#tmpDone'
+    template: '#tmpDone',
+    data: function () {
+        return {
+            tasks: []
+        };
+    },
+    methods: {
+        sendToInProgress: function (index, task) {
+            this.$parent.saveToInProgress(task);
+            this.tasks.splice(index, 1);
+        },
+        finish: function (index, task) {
+            this.$parent.sendToArchive(task);
+            this.tasks.splice(index, 1);
+        }
+    },
+    mounted: function () {
+        var self = this;
+        self.$parent.$on("onSentToDone", function (task) {
+            self.tasks.push(task);
+        });
+    }
 });
-
+yms.components.archive = Vue.component("yms-archive", {
+    template: '#tmpArchive',
+    data: function () {
+        return {
+            tasks: [],
+            isVisible: false,
+            buttonText : "Arşivi Göster"
+        };
+    },
+    methods: {
+        toggleArchive: function () {
+            this.isVisible = !this.isVisible;
+            if (this.isVisible) {
+                this.buttonText = "Arşivi Gizle";
+            }
+            else {
+                this.buttonText = "Arşivi Göster";
+            }
+        }
+    },
+    mounted: function () {
+        var self = this;
+        self.$parent.$on("onSentToArchive", function (task) {
+            self.tasks.push(task);
+        });
+    }
+});
 new Vue({
     el: "#taskList",
     methods: {
@@ -88,6 +135,12 @@ new Vue({
         },
         saveToToDo: function (task) {
             this.$emit("onSentToToDo", task);
+        },
+        saveToDone: function (task) {
+            this.$emit("onSentToDone", task);
+        },
+        sendToArchive: function (task) {
+            this.$emit("onSentToArchive", task);
         }
     }
 });

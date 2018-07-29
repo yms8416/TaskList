@@ -33,3 +33,14 @@
         display: none;
     }
 }
+
+.panel-danger > .panel-heading {
+    color: #ffffff;
+    background-color: #ec4c4c;
+    border-color: #ebccd1;
+}
+.panel-warning > .panel-heading {
+    color: #ffffff;
+    background-color: #948430;
+    border-color: #faebcc;
+}
